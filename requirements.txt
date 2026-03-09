@@ -1,2 +1,1 @@
-# Geen externe dependencies – alleen stdlib
-# Python 3.10+ vereist voor type hints (str | None)
+playwright>=1.40.0

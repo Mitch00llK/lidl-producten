@@ -37,6 +37,10 @@ JSON-database met Lidl producten, automatisch bijgewerkt via GitHub Actions.
 
 ```bash
 cd lidl-api
+pip install -r requirements.txt
+python -m playwright install chromium
 python scraper.py
-# → products.json
+# → products.json (ca. 1100+ producten)
 ```
+
+De scraper gebruikt Playwright (headless Chromium) omdat Lidl productdata via JavaScript rendert.
