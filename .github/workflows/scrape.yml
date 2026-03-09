@@ -1,0 +1,33 @@
+name: Scrape Lidl products
+
+on:
+  schedule:
+    # Elke zondag om 03:00 UTC (04:00/05:00 NL)
+    - cron: "0 3 * * 0"
+  workflow_dispatch:  # Handmatig triggeren
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run scraper
+        run: python scraper.py
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add products.json
+          if git diff --staged --quiet; then
+            echo "Geen wijzigingen"
+          else
+            git commit -m "Update Lidl producten $(date +%Y-%m-%d)"
+            git push
+          fi
